@@ -18,14 +18,16 @@ public class TCPMasterServer extends Base{
 	private final Node master;
 	private static TCPMasterServer serverMaster = FactoryUtil.getFactory().get(TCPMasterServer.class);
 	private final String naming = "masterService";
+	private ClusterService<Node> service;
 
 	public TCPMasterServer(){
-		this.master = new Node(getValue(Params.HOST));
+		this.master = new Node(getValue(Params.HOST)+":"+getValue(Params.PORT));
 		init();
 	}
 
 	private void init(){
 		this.master.setName(getValue(Params.NAME));
+		this.master.setIp(getValue(Params.HOST));
 		this.master.setPort(getIntValue(Params.PORT));
 		this.master.setNaming(naming);
 	}
@@ -65,7 +67,9 @@ public class TCPMasterServer extends Base{
 			if(NetworkUtil.ping(master)){
 				System.out.println("Registry master on: " + master);
 				ClusterService<Node> masterService = new ProxyMasterService(master);
-				masterService.synchronizeMaster(serverMaster.master);
+				Node masterRemote = masterService.synchronizeMaster(serverMaster.master);
+				serverMaster.service.refreshIndex(masterRemote);
+				serverMaster.service.refreshNodes(masterRemote);
 
 				break;
 			}

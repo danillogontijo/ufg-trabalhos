@@ -6,6 +6,7 @@ import br.ufg.emc.imagehosting.common.Base;
 import br.ufg.emc.imagehosting.common.RemoteException;
 import br.ufg.emc.imagehosting.data.Node;
 import br.ufg.emc.imagehosting.jndi.InitialContext;
+import br.ufg.emc.imagehosting.master.config.Params;
 import br.ufg.emc.imagehosting.service.remote.ClusterService;
 import br.ufg.emc.imagehosting.service.stub.ProxyMasterService;
 import br.ufg.emc.imagehosting.util.FactoryUtil;
@@ -20,13 +21,14 @@ public class TCPNodeServer extends Base{
 	private final String naming = "masterService";
 
 	public TCPNodeServer(){
-		this.node = new Node(getValue("host"));
+		this.node = new Node(getValue(Params.HOST)+":"+getValue(Params.PORT));
 		init();
 	}
 
 	private void init(){
-		this.node.setName(getValue("name"));
-		this.node.setPort(getIntValue("port"));
+		this.node.setName(getValue(Params.NAME));
+		this.node.setIp(getValue(Params.HOST));
+		this.node.setPort(getIntValue(Params.PORT));
 		this.node.setNaming(naming);
 	}
 
@@ -43,7 +45,7 @@ public class TCPNodeServer extends Base{
 			port = Integer.parseInt(args[0]);
 		}
 
-		System.out.println("Starting sever in port: " + port);
+		System.out.println("Starting "+ serverNode.node.getIp() +" in port: " + port);
 
 		ThreadPooledServer server = new ThreadPooledServer(port);
 		new Thread(server).start();
@@ -69,7 +71,7 @@ public class TCPNodeServer extends Base{
 			if(ping(master)){
 				System.out.println("Registry node on server master: " + master);
 				ClusterService<Node> masterService = new ProxyMasterService(master);
-				masterService.addNode(serverNode.node);
+				masterService.registryNode(serverNode.node);
 			}else{
 				System.err.println("Master is NOT alive: " + master);
 			}

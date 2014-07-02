@@ -80,5 +80,19 @@ public class ProxyMasterService extends Base implements ClusterService<Node>, Im
 		conn.close();
 	}
 
+	@Override
+	public void registryNode(Node node) throws RemoteException {
+		node.setMethodName("registryNode");
+		conn.open();
+		conn.send(node);
+		conn.close();
+	}
 
+	@Override
+	public void refreshNodes(Node node) throws RemoteException {
+		node.setMethodName("refreshNodes");
+		conn.open();
+		conn.send(node);
+		conn.close();
+	}
 }

@@ -14,11 +14,23 @@ public class Config {
 	private static int sizeNodes = 0;
 	public final static int SIZE_INDEX = 28;
 
-	public static void addNode(Node node){
-		if(!nodes.containsKey(node.getIp())){
-			nodes.put(node.getIp(), node);
+	/**
+	 * Adiciona um node caso ele ainda nao exista.
+	 * <p>
+	 * Caso o node já exista, ele é retornado,
+	 * caso contrário é retornado NULL.
+	 *
+	 * @param node
+	 */
+	public static Node addNode(Node node){
+		if(!nodes.containsKey(node.getId())){
+			nodes.put(node.getId(), node);
 			sizeNodes++;
+		}else{
+			return nodes.get(node);
 		}
+
+		return null;
 	}
 
 	public static Node getNode(String key){
@@ -36,7 +48,7 @@ public class Config {
 	}
 
 	public static void addMaster(Node node){
-		if(!masters.containsKey(node.getIp())){
+		if(!masters.containsKey(node.getId())){
 			masters.put(node.getIp(), node);
 		}
 	}
@@ -46,7 +58,7 @@ public class Config {
 	}
 
 	public static Node removeMaster(Node node){
-		Node masterRemoved = masters.remove(node.getIp());
+		Node masterRemoved = masters.remove(node.getId());
 		return masterRemoved;
 	}
 
@@ -55,7 +67,7 @@ public class Config {
 	}
 
 	public static Node removeNode(Node node){
-		Node nodeRemoved = nodes.remove(node.getIp());
+		Node nodeRemoved = nodes.remove(node.getId());
 		sizeNodes--;
 		return nodeRemoved;
 	}

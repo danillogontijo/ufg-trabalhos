@@ -1,7 +1,9 @@
 package br.ufg.emc.imagehosting.data;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import br.ufg.emc.imagehosting.common.data.DTO;
 
@@ -10,14 +12,15 @@ public class Node extends DTO{
 	private static final long serialVersionUID = 1L;
 
 	private String name;
-	private final String ip;
-	private final List<Node> nodesReplications = new ArrayList<Node>();
+	private String ip;
+	private final Set<Node> nodesReplications = new LinkedHashSet<Node>();
+	private List<Node> nodes;
 	private boolean alive = true;
 	private int port = 9001;
 	private Index index;
 
-	public Node(String ip){
-		this.ip = ip;
+	public Node(String id) {
+		super(id);
 	}
 
 	public String getName() {
@@ -29,8 +32,11 @@ public class Node extends DTO{
 	public String getIp() {
 		return ip;
 	}
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
 
-	public List<Node> getNodesReplications() {
+	public Set<Node> getNodesReplications() {
 		return nodesReplications;
 	}
 
@@ -42,7 +48,7 @@ public class Node extends DTO{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((ip == null) ? 0 : ip.hashCode());
+		result = prime * result + ((super.getId() == null) ? 0 : super.getId().hashCode());
 		return result;
 	}
 
@@ -54,13 +60,13 @@ public class Node extends DTO{
 				return true;
 
 			Node node = (Node) obj;
-			return node.getIp().equals(this.ip) ? true : false;
+			return node.getId().equals(super.getId()) ? true : false;
 		}
 		return false;
 	}
 
 	public String toString(){
-		return "Node ip:"+this.ip;
+		return "Node id:"+super.getId();
 	}
 
 	public boolean isAlive() {
@@ -85,6 +91,20 @@ public class Node extends DTO{
 
 	public void setIndex(Index index) {
 		this.index = index;
+	}
+
+	public List<Node> getNodes() {
+		return nodes;
+	}
+
+	public void setNodes(List<Node> nodes) {
+		this.nodes = nodes;
+	}
+
+	public List<Node> getAllNodes(){
+		List<Node> all = new ArrayList<Node>(nodesReplications);
+		all.add(this);
+		return all;
 	}
 
 }

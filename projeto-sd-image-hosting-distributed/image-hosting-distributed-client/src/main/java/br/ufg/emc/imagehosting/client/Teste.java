@@ -10,9 +10,17 @@ import br.ufg.emc.imagehosting.util.PropertiesUtil;
 public class Teste extends Base{
 
 	public static void main(String[] args) throws RemoteException {
-		String[] ar = {"localhost:9000","upload","/Users/danilo.gontijo/Documents/mysavedplaces_closed.png"};
+//		String[] ar = {"localhost:9000","upload","/Users/danilo.gontijo/Documents/temp/files/a.png"};
+//		ClientHostingApp.main(ar);
+//
+//		String[] ar2 = {"localhost:9000","upload","/Users/danilo.gontijo/Documents/temp/files/m.png"};
+//		ClientHostingApp.main(ar2);
+//
+//		String[] ar3 = {"localhost:9000","upload","/Users/danilo.gontijo/Documents/temp/files/r.png"};
+//		ClientHostingApp.main(ar3);
 
-		ClientHostingApp.main(ar);
+		String[] ar4 = {"localhost:9000","upload","/Users/danilo.gontijo/Documents/temp/files/z2.png"};
+		ClientHostingApp.main(ar4);
 
 	}
 

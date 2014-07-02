@@ -10,6 +10,14 @@ public class Index extends DTO {
 
 	private static final long serialVersionUID = 1L;
 
+	public Index() {
+		super("Index");
+	}
+
+	public Index(String id) {
+		super(id);
+	}
+
 	private IndexType indexType;
 	private Map<IndexType, LinkedHashSet<Node>> indexMap;
 
@@ -24,6 +32,10 @@ public class Index extends DTO {
 	}
 	public void setIndexType(IndexType indexType) {
 		this.indexType = indexType;
+	}
+
+	public String toString(){
+		return "{" + indexType + "-" + indexMap + "}";
 	}
 
 }

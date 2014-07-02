@@ -13,5 +13,6 @@ public class Params {
 	public static final String HOST = "host";
 	public static final String MASTERS = "masters";
 	public static final String PORT = "port";
+	public static final String SIZE_REPLICATION = "sizeReplication";
 
 }

@@ -6,16 +6,17 @@ public class Image extends DTO {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
+	public Image(String id) {
+		super(id);
+	}
+
+	public Image() {
+		super("Image");
+	}
+
 	private String filename;
 	private byte[] file;
 
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
 	public String getFilename() {
 		return filename;
 	}
