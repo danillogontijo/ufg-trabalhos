@@ -8,8 +8,8 @@ import java.lang.reflect.Method;
 import java.net.Socket;
 import java.rmi.RemoteException;
 
-import br.ufg.emc.imagehosting.common.Image;
 import br.ufg.emc.imagehosting.common.ImageService;
+import br.ufg.emc.imagehosting.common.data.Image;
 import br.ufg.emc.imagehosting.jndi.InitialContext;
 
 public class WorkerRunnable implements Runnable{
@@ -27,7 +27,7 @@ public class WorkerRunnable implements Runnable{
     	ObjectInputStream ois = null;
 
         try {
-        	ImageService imageService;
+        	ImageService<Image> imageService;
 
             // Read a message sent by client application
             ois = new ObjectInputStream(clientSocket.getInputStream());
@@ -88,7 +88,7 @@ public class WorkerRunnable implements Runnable{
 		}
     }
 
-    private ImageService lookup(String jndiname) throws RemoteException{
-    	return (ImageService) context.lookup(jndiname);
+    private ImageService<Image> lookup(String jndiname) throws RemoteException{
+    	return (ImageService<Image>) context.lookup(jndiname);
     }
 }

@@ -1,11 +1,11 @@
 package br.ufg.emc.imagehosting.service.stub;
 
-import br.ufg.emc.imagehosting.common.Image;
 import br.ufg.emc.imagehosting.common.ImageService;
 import br.ufg.emc.imagehosting.common.RemoteException;
 import br.ufg.emc.imagehosting.common.TCPConnection;
+import br.ufg.emc.imagehosting.common.data.Image;
 
-public class ProxyNodeService implements ImageService {
+public class ProxyNodeService implements ImageService<Image> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -15,7 +15,7 @@ public class ProxyNodeService implements ImageService {
 	public ProxyNodeService(String host){
 		conn = new TCPConnection(host);
 	}
-	
+
 	public ProxyNodeService(String host, int port){
 		conn = new TCPConnection(host, port);
 	}

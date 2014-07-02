@@ -8,11 +8,11 @@ import java.lang.reflect.Method;
 import java.net.Socket;
 import java.rmi.RemoteException;
 
-import br.ufg.emc.imagehosting.common.ClusterService;
-import br.ufg.emc.imagehosting.common.DTO;
-import br.ufg.emc.imagehosting.common.Image;
-import br.ufg.emc.imagehosting.common.Node;
+import br.ufg.emc.imagehosting.common.data.DTO;
+import br.ufg.emc.imagehosting.common.data.Image;
+import br.ufg.emc.imagehosting.data.Node;
 import br.ufg.emc.imagehosting.jndi.InitialContext;
+import br.ufg.emc.imagehosting.service.remote.ClusterService;
 
 public class WorkerRunnable implements Runnable{
 
@@ -29,7 +29,7 @@ public class WorkerRunnable implements Runnable{
     	ObjectInputStream ois = null;
 
         try {
-        	ClusterService clusterService;
+        	ClusterService<Node> clusterService;
 
             // Read a message sent by client application
             ois = new ObjectInputStream(clientSocket.getInputStream());
@@ -37,11 +37,11 @@ public class WorkerRunnable implements Runnable{
 
             System.out.println("Receiving from cliente: " + objClient);
 
-            if (objClient instanceof Image){
+            if (objClient instanceof DTO){
             	clusterService = lookup(objClient.getNaming());
 
             	// Invoke method by reflection
-            	Method method = clusterService.getClass().getMethod(((Image)objClient).getMethodName(), Image.class);
+            	Method method = clusterService.getClass().getMethod(objClient.getMethodName(), objClient.getClass());
             	Object objReturn = method.invoke(clusterService, objClient);
 
             	if(objReturn != null){
@@ -58,7 +58,7 @@ public class WorkerRunnable implements Runnable{
             }else if (objClient instanceof Node){
             	clusterService = lookup(objClient.getNaming());
             	try {
-					clusterService.add((Node)objClient);
+					clusterService.addNode((Node)objClient);
 					ObjectOutputStream oos = new ObjectOutputStream(clientSocket.getOutputStream());
                     oos.writeObject("SUCESS!");
                     oos.close();
@@ -101,7 +101,7 @@ public class WorkerRunnable implements Runnable{
 		}
     }
 
-    private ClusterService lookup(String jndiname) throws RemoteException{
-    	return (ClusterService) context.lookup(jndiname);
+    private ClusterService<Node> lookup(String jndiname) throws RemoteException{
+    	return (ClusterService<Node>) context.lookup(jndiname);
     }
 }

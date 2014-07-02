@@ -1,4 +1,4 @@
-package br.ufg.emc.imagehosting.common;
+package br.ufg.emc.imagehosting.common.data;
 
 import java.util.Arrays;
 
@@ -8,7 +8,6 @@ public class Image extends DTO {
 
 	private Long id;
 	private String filename;
-	private String methodName;
 	private byte[] file;
 
 	public Long getId() {
@@ -33,19 +32,13 @@ public class Image extends DTO {
 			this.file = Arrays.copyOf(file, file.length);
 		}
 	}
-	public String getMethodName() {
-		return methodName;
-	}
-	public void setMethodName(String methodName) {
-		this.methodName = methodName;
-	}
 
 	@Override
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
 		sb.append("[").append(filename).append("]")
 		.append("[").append(super.getNaming()).append("]")
-		.append("[").append(methodName).append("]");
+		.append("[").append(getMethodName()).append("]");
 
 		return sb.toString();
 	}

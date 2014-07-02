@@ -3,9 +3,9 @@ package br.ufg.emc.imagehosting.client;
 import java.util.List;
 
 import br.ufg.emc.imagehosting.common.Base;
-import br.ufg.emc.imagehosting.common.Image;
 import br.ufg.emc.imagehosting.common.ImageService;
 import br.ufg.emc.imagehosting.common.RemoteException;
+import br.ufg.emc.imagehosting.common.data.Image;
 import br.ufg.emc.imagehosting.util.FileUtil;
 import br.ufg.emc.imagehosting.util.NetworkUtil;
 
@@ -17,7 +17,7 @@ import br.ufg.emc.imagehosting.util.NetworkUtil;
  */
 public class ClientHostingApp extends Base {
 
-	private final ImageService imageService;
+	private final ImageService<Image> imageService;
 	private final String naming = "masterService";
 	private final Image image;
 
@@ -80,7 +80,7 @@ public class ClientHostingApp extends Base {
 					}
 				}
 			}
-			
+
 			if(client == null){
 				throw new RemoteException("There is no server active");
 			}

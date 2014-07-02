@@ -2,11 +2,11 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import br.ufg.emc.imagehosting.common.Node;
 import br.ufg.emc.imagehosting.common.RemoteException;
+import br.ufg.emc.imagehosting.data.Node;
 import br.ufg.emc.imagehosting.master.config.Config;
-import br.ufg.emc.imagehosting.master.config.Index;
-import br.ufg.emc.imagehosting.service.Indexer;
+import br.ufg.emc.imagehosting.master.config.IndexType;
+import br.ufg.emc.imagehosting.service.IndexerService;
 
 
 public class Teste {
@@ -18,9 +18,9 @@ public class Teste {
 		text = "Fdfasd";
 		text = "*dfasd";
 		
-		System.out.println(text.matches(Index.F.getRegex()));
-		System.out.println(text.matches(Index.SPECIALS.getRegex()));
-		System.out.println(text.matches(Index.NUMBER.getRegex()));
+		System.out.println(text.matches(IndexType.F.getRegex()));
+		System.out.println(text.matches(IndexType.SPECIALS.getRegex()));
+		System.out.println(text.matches(IndexType.NUMBER.getRegex()));
 		
 		Node n1 = new Node("1.1.1.1");
 		Node n2 = new Node("1.1.1.2");
@@ -37,7 +37,7 @@ public class Teste {
 //		System.out.println(Config.removeNode(n1).getIp());
 //		System.out.println(Config.removeNode(n2).getIp());
 		
-		Indexer i = new Indexer();
+		IndexerService i = new IndexerService();
 		Node node = i.index("9este");
 		System.out.println(node);
 		

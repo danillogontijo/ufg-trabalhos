@@ -1,11 +1,12 @@
 package br.ufg.emc.imagehosting.common;
 
-import java.io.Serializable;
+import br.ufg.emc.imagehosting.common.data.Image;
+import br.ufg.emc.imagehosting.common.service.GenericService;
 
-public interface ImageService extends Serializable{
+public interface ImageService<T extends Image> extends GenericService{
 
-	public void upload(Image image) throws RemoteException;
+	public void upload(T image) throws RemoteException;
 
-	public Image download(Image image) throws RemoteException;
+	public T download(T image) throws RemoteException;
 
 }

@@ -3,7 +3,7 @@ package br.ufg.emc.imagehosting.sever;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import br.ufg.emc.imagehosting.common.Image;
+import br.ufg.emc.imagehosting.common.data.Image;
 
 public class ReflectionTest {
 

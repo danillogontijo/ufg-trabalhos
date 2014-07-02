@@ -10,10 +10,10 @@ import br.ufg.emc.imagehosting.util.PropertiesUtil;
 public class Teste extends Base{
 
 	public static void main(String[] args) throws RemoteException {
-		String[] ar = {"localhost:9002","upload","c:/ASLog.txt"};
-		
+		String[] ar = {"localhost:9000","upload","/Users/danilo.gontijo/Documents/mysavedplaces_closed.png"};
+
 		ClientHostingApp.main(ar);
-		
+
 	}
 
 }

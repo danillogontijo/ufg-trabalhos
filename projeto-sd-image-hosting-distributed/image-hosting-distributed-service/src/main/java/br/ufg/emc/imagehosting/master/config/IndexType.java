@@ -1,7 +1,7 @@
 package br.ufg.emc.imagehosting.master.config;
 
-public enum Index {
-	
+public enum IndexType {
+
 	NUMBER("^[0-9].*$"),
 	A("^[aA].*$"),
 	B("^[bB].*$"),
@@ -30,26 +30,34 @@ public enum Index {
 	Y("^[yY].*$"),
 	Z("^[zZ].*$"),
 	SPECIALS("^[^\\w].*$");
-	
+
 	private String regex;
-	
-	Index(String regex){
+
+	IndexType(String regex){
 		this.regex = regex;
 	}
-	
+
 	public String getRegex(){
 		return this.regex;
 	}
-	
-	public Index getIndex(String str){
-		Index[] indexes = Index.values();
-		for (Index index : indexes) {
+
+	public static IndexType getIndex(String str){
+		for (final IndexType index : IndexType.values()) {
 			if(str.matches(index.getRegex())){
 				return index;
 			}
 		}
-		
+
 		return null;
 	}
+
+	public static IndexType fromOrdinal(final Integer ordinal) {
+        for (final IndexType index : IndexType.values()) {
+            if (index.ordinal() == ordinal) {
+                return index;
+            }
+        }
+        throw new RuntimeException("Ordinal IndexType inválido: " + ordinal);
+    }
 
 }

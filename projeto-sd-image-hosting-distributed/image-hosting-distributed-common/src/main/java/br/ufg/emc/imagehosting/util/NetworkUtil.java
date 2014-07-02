@@ -6,7 +6,7 @@ import java.net.Socket;
 import java.net.SocketAddress;
 
 public class NetworkUtil {
-	
+
 	public static boolean ping(String host, int port){
 		 SocketAddress sockaddr = new InetSocketAddress(host, port);
          Socket socket = new Socket();
@@ -24,12 +24,16 @@ public class NetworkUtil {
 				e.printStackTrace();
 			}
          }
-         
+
          return online;
 	}
-	
+
 	public static boolean ping(String host){
 		String[] ar = host.split(":");
+		if(ar.length < 2){
+			throw new RuntimeException("host invalid.");
+		}
+
 		return NetworkUtil.ping(ar[0], Integer.parseInt(ar[1]));
 	}
 

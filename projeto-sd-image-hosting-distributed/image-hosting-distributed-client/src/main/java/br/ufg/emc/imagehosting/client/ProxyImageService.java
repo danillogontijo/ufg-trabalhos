@@ -1,15 +1,12 @@
 package br.ufg.emc.imagehosting.client;
 
-import br.ufg.emc.imagehosting.common.Image;
 import br.ufg.emc.imagehosting.common.ImageService;
 import br.ufg.emc.imagehosting.common.RemoteException;
 import br.ufg.emc.imagehosting.common.TCPConnection;
+import br.ufg.emc.imagehosting.common.data.Image;
 
-public class ProxyImageService implements ImageService {
+public class ProxyImageService implements ImageService<Image> {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private final TCPConnection conn;

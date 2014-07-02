@@ -2,8 +2,8 @@ package br.ufg.emc.imagehosting.jndi;
 
 import java.rmi.RemoteException;
 
-import br.ufg.emc.imagehosting.common.ClusterService;
 import br.ufg.emc.imagehosting.common.ImageService;
+import br.ufg.emc.imagehosting.service.remote.ClusterService;
 import br.ufg.emc.imagehosting.service.remote.ImageServiceMasterRemote;
 import br.ufg.emc.imagehosting.service.remote.ImageServiceNodeRemote;
 
