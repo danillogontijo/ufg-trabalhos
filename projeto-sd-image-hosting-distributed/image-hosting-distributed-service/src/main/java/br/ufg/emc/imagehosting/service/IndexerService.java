@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ufg.emc.imagehosting.common.RemoteException;
+import br.ufg.emc.imagehosting.data.IndexTable;
 import br.ufg.emc.imagehosting.data.Node;
 import br.ufg.emc.imagehosting.master.config.Config;
 import br.ufg.emc.imagehosting.master.config.IndexType;
@@ -24,6 +25,10 @@ public class IndexerService {
 		IndexType index = getIndexTypeFromName(filename);
 
 		return getBalanced(index);
+	}
+
+	public Node getFromIndexTable(String filename){
+		return IndexTable.getFirstNode(IndexType.getIndex(filename));
 	}
 
 	private Node getBalanced(IndexType index) throws RemoteException{

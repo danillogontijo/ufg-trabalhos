@@ -24,7 +24,7 @@ public class IndexTable {
 		}
 	}
 
-	public static void addNodeList(Map<IndexType, LinkedHashSet<Node>> indexMap){
+	public synchronized static void addNodeList(Map<IndexType, LinkedHashSet<Node>> indexMap){
 		IndexTable.indexMap.putAll(indexMap);
 	}
 
@@ -32,17 +32,28 @@ public class IndexTable {
 	 *
 	 * @param node
 	 */
-	public static void addNode(IndexType indexType, Node node){
+	public synchronized static void addNode(IndexType indexType, Node node){
 		getListNode(indexType).add(node);
 	}
 
-	public static Node getFirstNode(IndexType indexType){
+	/**
+	 * Traz o primeiro node da lista de um indice,
+	 * remove este indice, e o adiciona novamente
+	 * no final da fila.
+	 *
+	 * @param indexType
+	 * @return
+	 */
+	public synchronized static Node getFirstNode(IndexType indexType){
+		System.out.println("Buscando o primeiro node da fila...");
 		LinkedHashSet<Node> set = IndexTable.indexMap.get(indexType);
 		Node first = null;
 		for (Node node : set) {
 			first = node;
+			System.out.println("Node encontrado: " + first);
 			break;
 		}
+		System.out.println("Enviando o node para o fim da fila de balanceamento: " + first);
 		set.remove(first);
 		set.add(first);
 		return first;

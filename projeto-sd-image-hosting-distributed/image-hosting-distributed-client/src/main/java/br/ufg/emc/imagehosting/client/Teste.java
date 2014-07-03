@@ -19,8 +19,12 @@ public class Teste extends Base{
 //		String[] ar3 = {"localhost:9000","upload","/Users/danilo.gontijo/Documents/temp/files/r.png"};
 //		ClientHostingApp.main(ar3);
 
-		String[] ar4 = {"localhost:9000","upload","/Users/danilo.gontijo/Documents/temp/files/z2.png"};
-		ClientHostingApp.main(ar4);
+//		String[] ar4 = {"localhost:9000","upload","/Users/danilo.gontijo/Documents/temp/files/z2.png"};
+//		ClientHostingApp.main(ar4);
+
+
+		String[] ar = {"localhost:9000","download","/Users/danilo.gontijo/Documents/temp/downloaded/a.png", "a.png"};
+		ClientHostingApp.main(ar);
 
 	}
 

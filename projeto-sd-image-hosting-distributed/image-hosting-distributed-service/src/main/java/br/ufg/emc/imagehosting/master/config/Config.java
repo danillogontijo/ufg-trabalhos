@@ -66,6 +66,10 @@ public class Config {
 		return masters;
 	}
 
+	public static List<Node> getMastersList(){
+		return new ArrayList<Node>(masters.values());
+	}
+
 	public static Node removeNode(Node node){
 		Node nodeRemoved = nodes.remove(node.getId());
 		sizeNodes--;

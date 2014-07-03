@@ -38,6 +38,12 @@ public class ImageServiceMasterRemote extends Base implements ClusterService<Nod
 		this.indexer = FactoryUtil.getFactory().get(IndexerService.class);
 	}
 
+	/**
+	 * Realiza o upload, replicando os dados nos nodes,
+	 * adiciona os nodes na tabela de indice e, por final,
+	 * faz a sincronizacao da tabela com os outros masters.
+	 *
+	 */
 	public void upload(Image image) throws RemoteException {
 		boolean existsNodeActivated = false;
 		Node node = indexer.index(image.getFilename());
@@ -45,12 +51,22 @@ public class ImageServiceMasterRemote extends Base implements ClusterService<Nod
 		service.upload(image);
 		existsNodeActivated = true;
 
+		IndexType  indexType = IndexType.getIndex(image.getFilename());
+
 		for (Node n : node.getNodesReplications()) {
 			if(ping(n)){
 				service = new ProxyNodeService(n.getIp(), n.getPort());
 				service.upload(image);
 				existsNodeActivated = true;
+				// Adicionando node na tabela de indices
+				IndexTable.addNode(indexType, n);
 			}
+		}
+
+		// sincronizando a tabela de indices dos masters
+		List<Node> masters = Config.getMastersList();
+		for (Node master : masters) {
+			synchronizeIndex(master);
 		}
 
 		if(!existsNodeActivated){
@@ -59,7 +75,7 @@ public class ImageServiceMasterRemote extends Base implements ClusterService<Nod
 	}
 
 	public Image download(Image image) throws RemoteException {
-		Node node = indexer.index(image.getFilename());
+		Node node = indexer.getFromIndexTable(image.getFilename());
 		service = new ProxyNodeService(node.getIp(), node.getPort());
 		if(ping(node)){
 			return service.download(image);
