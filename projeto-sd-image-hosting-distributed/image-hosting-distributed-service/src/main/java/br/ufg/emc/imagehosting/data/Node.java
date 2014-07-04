@@ -14,7 +14,7 @@ public class Node extends DTO{
 	private String name;
 	private String ip;
 	private final Set<Node> nodesReplications = new LinkedHashSet<Node>();
-	private List<Node> nodes;
+	private List<Node> nodes = new ArrayList<Node>();
 	private boolean alive = true;
 	private int port = 9001;
 	private Index index;

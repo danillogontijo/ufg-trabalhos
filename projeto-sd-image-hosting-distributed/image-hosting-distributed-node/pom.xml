@@ -16,7 +16,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>br.ufg.emc.imagehosting.node.server.TCPMasterServer</mainClass>
+							<mainClass>br.ufg.emc.imagehosting.node.server.TCPNodeServer</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>

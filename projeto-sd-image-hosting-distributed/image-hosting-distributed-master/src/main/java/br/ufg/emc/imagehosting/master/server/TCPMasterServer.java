@@ -9,6 +9,7 @@ import br.ufg.emc.imagehosting.data.Node;
 import br.ufg.emc.imagehosting.jndi.InitialContext;
 import br.ufg.emc.imagehosting.master.config.Params;
 import br.ufg.emc.imagehosting.service.remote.ClusterService;
+import br.ufg.emc.imagehosting.service.remote.ImageServiceMasterRemote;
 import br.ufg.emc.imagehosting.service.stub.ProxyMasterService;
 import br.ufg.emc.imagehosting.util.FactoryUtil;
 import br.ufg.emc.imagehosting.util.NetworkUtil;
@@ -17,8 +18,8 @@ public class TCPMasterServer extends Base{
 
 	private final Node master;
 	private static TCPMasterServer serverMaster = FactoryUtil.getFactory().get(TCPMasterServer.class);
-	private final String naming = "masterService";
-	private ClusterService<Node> service;
+	private static final String naming = "masterService";
+	private static InitialContext context = new InitialContext();
 
 	public TCPMasterServer(){
 		this.master = new Node(getValue(Params.HOST)+":"+getValue(Params.PORT));
@@ -34,8 +35,7 @@ public class TCPMasterServer extends Base{
 
 	public static void main(String[] args) throws RemoteException {
 
-		InitialContext context = new InitialContext();
-		context.bind("masterService");
+		context.bind(naming);
 
 		int port = serverMaster.master.getPort();
 
@@ -68,9 +68,13 @@ public class TCPMasterServer extends Base{
 				System.out.println("Registry master on: " + master);
 				ClusterService<Node> masterService = new ProxyMasterService(master);
 				Node masterRemote = masterService.synchronizeMaster(serverMaster.master);
-				serverMaster.service.refreshIndex(masterRemote);
-				serverMaster.service.refreshNodes(masterRemote);
-
+				ClusterService<Node> service = (ClusterService<Node>) context.lookup(naming);
+				try{
+					service.refreshIndex(masterRemote);
+					service.refreshNodes(masterRemote);
+				}catch(RemoteException e){
+					System.out.println(e.getMessage());
+				}
 				break;
 			}
 			System.err.println("Master is NOT alive: " + master);

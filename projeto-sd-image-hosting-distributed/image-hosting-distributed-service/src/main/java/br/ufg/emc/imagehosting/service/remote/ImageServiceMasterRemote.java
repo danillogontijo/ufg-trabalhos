@@ -82,6 +82,7 @@ public class ImageServiceMasterRemote extends Base implements ClusterService<Nod
 		}else{
 			for (Node n : node.getNodesReplications()) {
 				if(ping(n)){
+					service = new ProxyNodeService(n.getIp(), n.getPort());
 					return service.download(image);
 				}
 			}
@@ -184,8 +185,12 @@ public class ImageServiceMasterRemote extends Base implements ClusterService<Nod
 		System.out.println("Synchronizing master: " + node.toString());
 		Map<String, Node> masters = Config.getMasters();
 		for(Node masterSystem : masters.values()){
-			ClusterService<Node> masterService = new ProxyMasterService(masterSystem.getIp(), masterSystem.getPort());
-			masterService.addMaster(masterSystem);
+			if(ping(masterSystem)){
+				ClusterService<Node> masterService = new ProxyMasterService(masterSystem.getIp(), masterSystem.getPort());
+				masterService.addMaster(masterSystem);
+			}else{
+				masterSystem.setAlive(false);
+			}
 		}
 
 		node.getNodes().addAll(Config.getNodesList());
