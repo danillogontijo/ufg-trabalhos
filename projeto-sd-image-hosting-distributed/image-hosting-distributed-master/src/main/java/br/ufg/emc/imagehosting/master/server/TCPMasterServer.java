@@ -5,11 +5,12 @@ import java.util.List;
 
 import br.ufg.emc.imagehosting.common.Base;
 import br.ufg.emc.imagehosting.common.RemoteException;
+import br.ufg.emc.imagehosting.data.IndexTable;
 import br.ufg.emc.imagehosting.data.Node;
 import br.ufg.emc.imagehosting.jndi.InitialContext;
+import br.ufg.emc.imagehosting.master.config.Config;
 import br.ufg.emc.imagehosting.master.config.Params;
 import br.ufg.emc.imagehosting.service.remote.ClusterService;
-import br.ufg.emc.imagehosting.service.remote.ImageServiceMasterRemote;
 import br.ufg.emc.imagehosting.service.stub.ProxyMasterService;
 import br.ufg.emc.imagehosting.util.FactoryUtil;
 import br.ufg.emc.imagehosting.util.NetworkUtil;
@@ -68,12 +69,9 @@ public class TCPMasterServer extends Base{
 				System.out.println("Registry master on: " + master);
 				ClusterService<Node> masterService = new ProxyMasterService(master);
 				Node masterRemote = masterService.synchronizeMaster(serverMaster.master);
-				ClusterService<Node> service = (ClusterService<Node>) context.lookup(naming);
-				try{
-					service.refreshIndex(masterRemote);
-					service.refreshNodes(masterRemote);
-				}catch(RemoteException e){
-					System.out.println(e.getMessage());
+				IndexTable.addNodeList(masterRemote.getIndex().getIndexMap());
+				for(Node n : masterRemote.getNodes()){
+					Config.addNode(n);
 				}
 				break;
 			}
