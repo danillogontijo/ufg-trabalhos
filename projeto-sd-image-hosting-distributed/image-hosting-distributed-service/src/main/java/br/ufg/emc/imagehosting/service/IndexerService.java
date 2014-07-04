@@ -27,8 +27,26 @@ public class IndexerService {
 		return getBalanced(index);
 	}
 
+	/**
+	 * Retorna o primeiro node da tabela de index.
+	 * Este node faz parte de uma lista circular
+	 * para balancear a carga de solicitacao entre os nodes.
+	 *
+	 * @param filename
+	 * @return
+	 */
 	public Node getFromIndexTable(String filename){
 		return IndexTable.getFirstNode(IndexType.getIndex(filename));
+	}
+
+	/**
+	 * Retorna a quantidade de nodes da tabela para determinado index.
+	 *
+	 * @param indexType
+	 * @return nr de nodes
+	 */
+	public int getSizeFromIndexType(IndexType indexType){
+		return IndexTable.getListNode(indexType).size();
 	}
 
 	private Node getBalanced(IndexType index) throws RemoteException{

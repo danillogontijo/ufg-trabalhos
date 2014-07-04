@@ -47,10 +47,14 @@ public class ImageServiceNodeRemote extends Base implements ImageService<Image> 
 	 * Traz o arquivo de imagem do local armazendo no node
 	 */
 	public Image download(Image image) throws RemoteException {
-		byte[] data = FileUtil.getFile(folder(image)+image.getFilename());
-		image.setFile(data);
-
-		System.out.println("Returning file: "+folder(image)+image.getFilename());
+		try{
+			byte[] data = FileUtil.getFile(folder(image)+image.getFilename());
+			image.setFile(data);
+			System.out.println("Returning file: "+folder(image)+image.getFilename());
+		}catch(RemoteException e){
+			System.out.println(e.getMessage());
+			image.setException(e);
+		}
 
 		return image;
 	}

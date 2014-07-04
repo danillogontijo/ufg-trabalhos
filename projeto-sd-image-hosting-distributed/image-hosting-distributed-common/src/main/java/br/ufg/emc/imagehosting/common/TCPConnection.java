@@ -17,7 +17,7 @@ public class TCPConnection {
 		this.server = ar[0];
 		this.port = Integer.parseInt(ar[1]);
 	}
-	
+
 	public TCPConnection(String host, int port){
 		this.server = host;
 		this.port = port;
@@ -53,9 +53,9 @@ public class TCPConnection {
 			objreturn = (Object) ois.readObject();
 
 		} catch (ClassNotFoundException e) {
-			throw new RemoteException("Can't send data", e);
+			throw new RemoteException("Class not found: ", e);
 		} catch (IOException e) {
-			throw new RemoteException("Can't send data", e);
+			throw new RemoteException("Error to return data: ", e);
 		} finally{
 			try {
 				if(ois != null){

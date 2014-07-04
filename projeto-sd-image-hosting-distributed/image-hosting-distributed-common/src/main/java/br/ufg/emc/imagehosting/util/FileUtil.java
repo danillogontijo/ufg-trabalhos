@@ -21,7 +21,7 @@ public class FileUtil {
 			input = new FileInputStream(new File(localfile));
 			encoded = IOUtils.toByteArray(input);
 		} catch (FileNotFoundException e) {
-			throw new RemoteException("Can't get data", e);
+			throw new RemoteException("File not found: " + localfile, e);
 		} catch (IOException e) {
 			throw new RemoteException("Can't get data", e);
 		}

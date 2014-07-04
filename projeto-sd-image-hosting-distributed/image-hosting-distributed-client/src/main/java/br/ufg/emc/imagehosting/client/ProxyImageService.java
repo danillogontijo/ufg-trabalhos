@@ -20,6 +20,10 @@ public class ProxyImageService implements ImageService<Image> {
 		conn.open();
 		conn.send(image);
 		conn.close();
+
+		if(image.getException() != null){
+			throw image.getException();
+		}
 	}
 
 	@Override
@@ -27,6 +31,10 @@ public class ProxyImageService implements ImageService<Image> {
 		conn.open();
 		image = (Image) conn.send(image);
 		conn.close();
+
+		if(image.getException() != null){
+			throw image.getException();
+		}
 
 		return image;
 	}

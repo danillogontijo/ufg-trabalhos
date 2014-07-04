@@ -74,20 +74,86 @@ public class ImageServiceMasterRemote extends Base implements ClusterService<Nod
 		}
 	}
 
+	/**
+	 * Realiza o download no node onde esta armazenado o arquivo.
+	 * <p>
+	 * O node eh escolhido na tabela de indice atraves de lista circular.
+	 * <p>
+	 * Caso nao seja encontrado o arquivo, eh realizado tentativas em toda
+	 * a lista circular da tabela de indices e em seus nodes replicados.
+	 * <p>
+	 * Caso mesmo assim nao seja encontrado o arquivo, eh retornado o DTO
+	 * setado com sua RemoteException
+	 *
+	 */
 	public Image download(Image image) throws RemoteException {
-		Node node = indexer.getFromIndexTable(image.getFilename());
-		service = new ProxyNodeService(node.getIp(), node.getPort());
-		if(ping(node)){
-			return service.download(image);
-		}else{
-			for (Node n : node.getNodesReplications()) {
-				if(ping(n)){
-					service = new ProxyNodeService(n.getIp(), n.getPort());
-					return service.download(image);
-				}
+		int sizeIndexInTable = indexer.getSizeFromIndexType(IndexType.getIndex(image.getFilename()));
+
+		while(sizeIndexInTable > 0){
+			Node nodeBalanced = indexer.getFromIndexTable(image.getFilename());
+			image = preventDownloadFault(image, nodeBalanced);
+			if(image.getException() == null){
+				return image;
+			}else{
+				sizeIndexInTable--;
 			}
 		}
-		throw new RemoteException("No node active.");
+		return image;
+	}
+
+	/**
+	 * Previne falha ao tentar realizar o download.
+	 *
+	 * @param image
+	 * @param node
+	 * @return
+	 * @throws RemoteException
+	 */
+	private Image preventDownloadFault(Image image, Node node) throws RemoteException{
+		System.out.println("Realizando busca da imagem: " + image.getFilename());
+
+		image.setException(null);
+
+		if(ping(node)){
+			service = new ProxyNodeService(node.getIp(), node.getPort());
+			image = service.download(image);
+
+			if(image.getException() != null){
+				System.err.println(image.getException().getMessage());
+				System.out.println("Nao foi possivel encontrar a imagem no node: " + node);
+				image = searchingInReplications(image, node);
+			}
+		}else{
+			return searchingInReplications(image, node);
+		}
+
+		return image;
+	}
+
+	/**
+	 * Realiza busca nas replicacoes de determinado node.
+	 *
+	 * @param image
+	 * @param node
+	 * @return
+	 * @throws RemoteException
+	 */
+	private Image searchingInReplications(Image image, Node node) throws RemoteException{
+		System.out.println("Tentando busca nas replicacoes do node: " + node);
+		for (Node n : node.getNodesReplications()) {
+			image.setException(null);
+			if(ping(n)){
+				service = new ProxyNodeService(n.getIp(), n.getPort());
+				image = service.download(image);
+				if(image.getException() == null){
+					break;
+				}
+			}else{
+				image.setException(new RemoteException("Nenhum node ativo para o arquivo: " + image.getFilename()));
+			}
+		}
+
+		return image;
 	}
 
 	private boolean ping(Node node){
