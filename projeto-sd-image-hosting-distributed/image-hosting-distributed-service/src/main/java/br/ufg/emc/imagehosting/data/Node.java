@@ -7,6 +7,12 @@ import java.util.Set;
 
 import br.ufg.emc.imagehosting.common.data.DTO;
 
+/**
+ * Data Transfer Object para os Nodes e Masters
+ *
+ * @author danilo.gontijo
+ *
+ */
 public class Node extends DTO{
 
 	private static final long serialVersionUID = 1L;

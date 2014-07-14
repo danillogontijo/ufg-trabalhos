@@ -206,6 +206,12 @@ public class ImageServiceMasterRemote extends Base implements ClusterService<Nod
 		Config.addNode(node);
 	}
 
+	/**
+	 * Retona o melhor o Node (com menor indice de replicacao associado).
+	 *
+	 * @param ignores Node a serem igonorados na busca.
+	 * @return Node
+	 */
 	private Node getBetterNodeToReplication(Node... ignores){
 		Map<String, Node> nodes = Config.getNodes();
 
