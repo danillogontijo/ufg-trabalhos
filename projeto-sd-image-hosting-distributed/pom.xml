@@ -19,7 +19,7 @@
 	      <url>http://repo.maven.apache.org/maven2</url>
 	    </pluginRepository>
 	  </pluginRepositories>
-	
+
 	   <build>
 	    <plugins>
 	      <plugin>
@@ -33,7 +33,15 @@
 	      </plugin>
 	    </plugins>
 	  </build>
-	
+
+	<dependencies>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.16</version>
+		</dependency>
+	</dependencies>
+
 	   <dependencyManagement>
 	   	<dependencies>
 	   		<dependency>

@@ -2,6 +2,8 @@ package br.ufg.emc.imagehosting.client;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import br.ufg.emc.imagehosting.common.Base;
 import br.ufg.emc.imagehosting.common.ImageService;
 import br.ufg.emc.imagehosting.common.RemoteException;
@@ -16,6 +18,8 @@ import br.ufg.emc.imagehosting.util.NetworkUtil;
  *
  */
 public class ClientHostingApp extends Base {
+
+	static Logger logger = Logger.getLogger(ClientHostingApp.class);
 
 	private final ImageService<Image> imageService;
 	private final String naming = "masterService";
@@ -52,6 +56,10 @@ public class ClientHostingApp extends Base {
 	}
 
 	public static void main(String[] args) throws RemoteException {
+
+		logger.info("Starting client...");
+
+		long timeSpent = System.currentTimeMillis();
 
 		ClientHostingApp client;
 
@@ -113,6 +121,11 @@ public class ClientHostingApp extends Base {
 			System.out.println("Use: [host:port] [upload|download] [image_location] [image_name (only for download)]");
 			break;
 		}
+
+		timeSpent = System.currentTimeMillis() - timeSpent;
+
+		System.out.println("Tempo total gasto (ms): " + (timeSpent));
+		logger.debug(timeSpent);
 	}
 
 }
