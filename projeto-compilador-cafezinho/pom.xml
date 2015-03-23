@@ -8,7 +8,19 @@
   <artifactId>projeto-compilador-cafezinho</artifactId>
   <name>projeto compilador cafezinho 1-2015</name>
   
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  <dependencies>
+    <!-- <dependency>
+		<groupId>net.sf.squirrel-sql.thirdparty-non-maven</groupId>
+		<artifactId>java-cup</artifactId>
+		<version>0.11a</version>
+    </dependency> -->
+  </dependencies>
+  
   <build>
+  <finalName>cafezinho</finalName>
     <plugins>
       <plugin>
         <groupId>de.jflex</groupId>
@@ -41,7 +53,46 @@
           </execution>
         </executions>
       </plugin>
+      
+        <!-- <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <version>2.4</version>
+            <configuration>
+                <archive>
+                    <manifest>
+                        <mainClass>br.ufg.emc.compiladores.main.Cafezinho</mainClass>
+                    </manifest>
+                </archive>
+            </configuration>
+        </plugin> -->
+
+        <plugin>
+		    <artifactId>maven-assembly-plugin</artifactId>
+		    <configuration>
+		        <archive>
+		            <manifest>
+		                <mainClass>br.ufg.emc.compiladores.main.Cafezinho</mainClass>
+		            </manifest>
+		        </archive>
+		        <descriptorRefs>
+		            <descriptorRef>jar-with-dependencies</descriptorRef>
+		        </descriptorRefs>
+		    </configuration>
+		    <executions>
+		     <execution>
+		      <id>make-assembly</id> <!-- this is used for inheritance merges -->
+		      <phase>package</phase> <!-- bind to the packaging phase -->
+		      <goals>
+		        <goal>single</goal>
+		      </goals>
+		    </execution>
+		  </executions>
+		</plugin>
+      
     </plugins>
+    
+    
     <pluginManagement>
     	<plugins>
     		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
