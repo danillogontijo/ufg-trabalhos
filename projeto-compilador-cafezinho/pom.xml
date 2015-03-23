@@ -8,6 +8,17 @@
   <artifactId>projeto-compilador-cafezinho</artifactId>
   <name>projeto compilador cafezinho 1-2015</name>
   
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  <dependencies>
+    <!-- <dependency>
+		<groupId>net.sf.squirrel-sql.thirdparty-non-maven</groupId>
+		<artifactId>java-cup</artifactId>
+		<version>0.11a</version>
+    </dependency> -->
+  </dependencies>
+  
   <build>
     <plugins>
       <plugin>
