@@ -20,10 +20,15 @@ import br.ufg.emc.compiladores.sintatico.byacc.ParserVal;
   private Parser yyparser;
 
   StringBuffer string = new StringBuffer();
+  StringBuffer error = new StringBuffer();
 
   public Yylex(java.io.Reader r, Parser yyparser) {
     this(r);
     this.yyparser = yyparser;
+  }
+  
+  public String getError(){
+  	return error.toString();
   }
 
 %}
@@ -108,6 +113,7 @@ StringCharacter = [^\r\n\"\\]
   	/* identifiers */
   	{Identifier}                   {yyparser.yylval = new ParserVal(yytext()); return ID; }
 }
+
   	<STRING> {
 		  \"                             { yybegin(YYINITIAL); yyparser.yylval = new ParserVal(string.toString()); return STRING_LITERAL;  }
 
@@ -124,9 +130,8 @@ StringCharacter = [^\r\n\"\\]
 		  "\\\\"                         { string.append( '\\' ); }
 
 		  /* error cases */
-		  \\.                            { throw new RuntimeException("Illegal escape sequence \""+yytext()+"\""); }
-		  {LineTerminator}               { throw new RuntimeException("Unterminated string at end of line"); }
+		  {LineTerminator}               { throw new RuntimeException("CADEIA DE CARACTERES OCUPA MAIS DE UMA LINHA"); }
 	}
 
 	/* error fallback */
-	[^]    { System.err.println("Error: unexpected character '"+yytext()+"'"); return -1; }
+	[^]    { System.err.println("ERRO: CARACTER INVALIDO '"+yytext()+"'. Linha " + (yyline+1) + "\n"); return -1; }

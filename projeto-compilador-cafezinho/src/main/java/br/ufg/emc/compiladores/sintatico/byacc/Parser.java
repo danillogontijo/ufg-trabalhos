@@ -554,8 +554,8 @@ final static String yyrule[] = {
   public static void main(String args[]) throws IOException {
     System.out.println("BYACC/Java with JFlex - Cafezinho");
 
-//    args = new String[1];
-//    args[0] = "src/test/resources/teste.z";
+    args = new String[1];
+    args[0] = "src/test/resources/teste.z";
 
     Parser yyparser;
     if ( args.length > 0 ) {
@@ -569,9 +569,13 @@ final static String yyrule[] = {
 	    yyparser = new Parser(new InputStreamReader(System.in));
     }
 
-    yyparser.yyparse();
-
-    System.out.println("\n Entrada Valida");
+    int ret = yyparser.yyparse();
+    
+    if(ret == 0){
+    	System.out.println("\n Entrada Valida");
+    }else{
+    	System.err.println("\n Entrada Invalida");
+    }
 
     if (interactive) {
       System.out.println();

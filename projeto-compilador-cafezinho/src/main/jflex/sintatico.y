@@ -170,7 +170,13 @@ ListExpr : AssingExpr
 	    yyparser = new Parser(new InputStreamReader(System.in));
     }
 
-    yyparser.yyparse();
+    int ret = yyparser.yyparse();
+    
+    if(ret == 0){
+    	System.out.println("\n Entrada Valida");
+    }else{
+    	System.err.println("\n Entrada Invalida");
+    }
 
     if (interactive) {
       System.out.println();
