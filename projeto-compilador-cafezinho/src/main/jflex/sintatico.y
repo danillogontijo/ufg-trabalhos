@@ -2,6 +2,7 @@
 	package br.ufg.emc.compiladores.sintatico.byacc;
 	import java.io.*;
 	import br.ufg.emc.compiladores.lexico.*;
+	import br.ufg.emc.compiladores.interpreter.ast.Programa;
 %}
 
 
@@ -141,7 +142,7 @@ ListExpr : AssingExpr
 
 
   public void yyerror (String error) {
-    System.err.println ("Error: " + error);
+    System.err.println ("Error: " + error + " in line " + lexer.getLine());
   }
 
 
@@ -155,8 +156,12 @@ ListExpr : AssingExpr
   public static void main(String args[]) throws IOException {
     System.out.println("BYACC/Java with JFlex - Cafezinho");
 
+	if ( args.length < 1 ) {
+		args[0] = "src/test/resources/teste.z";
+	}
+
     args = new String[1];
-    args[0] = "src/test/resources/teste.z";
+    //args[0] = "src/test/resources/teste.z";
 
     Parser yyparser;
     if ( args.length > 0 ) {
@@ -177,9 +182,16 @@ ListExpr : AssingExpr
     }else{
     	System.err.println("\n Entrada Invalida");
     }
+    
+    try { 
+      syntaxbaum = (Programa) parser.parse().value;  // parse
+    }    
+    catch (Exception e) { 
+      e.printStackTrace(); 
+    }
 
     if (interactive) {
       System.out.println();
-      System.out.println("Have a nice day");
+      System.out.println("====Fim====");
     }
   }

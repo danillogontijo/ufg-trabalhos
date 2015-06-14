@@ -20,15 +20,14 @@ import br.ufg.emc.compiladores.sintatico.byacc.ParserVal;
   private Parser yyparser;
 
   StringBuffer string = new StringBuffer();
-  StringBuffer error = new StringBuffer();
-
+  
   public Yylex(java.io.Reader r, Parser yyparser) {
     this(r);
     this.yyparser = yyparser;
   }
   
-  public String getError(){
-  	return error.toString();
+  public String getLine(){
+  	return yyline;
   }
 
 %}
