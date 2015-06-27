@@ -18,13 +18,14 @@
 
 //#line 1 "sintatico.y"
 
-	/*package br.ufg.emc.compiladores.sintatico.byacc;*/
-	/*import br.ufg.emc.compiladores.lexico.*;*/
-
+	/*package br.ufg.emc.compiladores.sintatico.byacc;
+*/
 	import java.io.*;
 
-import br.ufg.emc.compiladores.interpreter.ast.Programa;
-//#line 23 "Parser.java"
+import br.ufg.emc.compiladores.lexico.*;
+import br.ufg.emc.compiladores.interpreter.ast.*;
+import br.ufg.emc.compiladores.interpreter.symtab.*;
+//#line 24 "Parser.java"
 
 
 
@@ -204,10 +205,10 @@ public final static short STRING_LITERAL=295;
 public final static short ID=296;
 public final static short YYERRCODE=256;
 final static short yylhs[] = {                           -1,
-    0,    1,    1,    1,    1,    2,    4,    4,    4,    4,
-    5,    7,    7,    8,    8,    8,    8,    6,    6,    9,
-    9,    9,    3,    3,   10,   10,   11,   11,   11,   11,
-   11,   11,   11,   11,   11,   11,   11,   12,   14,   14,
+    0,    1,    1,    1,    1,    2,    3,    3,    3,    3,
+    5,    7,    7,    8,    8,    8,    8,    6,    6,   11,
+   11,   11,    4,    4,   10,   10,    9,    9,    9,    9,
+    9,    9,    9,    9,    9,    9,    9,   12,   14,   14,
    15,   15,   16,   16,   17,   17,   18,   18,   18,   19,
    19,   19,   19,   19,   20,   20,   20,   21,   21,   21,
    21,   22,   22,   22,   13,   13,   23,   23,   23,   23,
@@ -231,7 +232,7 @@ final static short yydefred[] = {                         0,
    37,    0,    0,    0,    0,   38,   39,    0,    0,    0,
     0,    0,    0,   61,   64,    0,    0,    8,    0,    0,
     2,    0,    0,    0,    0,    0,    0,    0,    0,   33,
-    0,    0,    0,   62,   63,    0,    0,   18,   26,   28,
+    0,    0,    0,   62,   63,    0,    0,   26,   18,   28,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,   11,
     0,    0,   73,   29,    0,   30,   32,   31,    0,    0,
@@ -243,8 +244,8 @@ final static short yydefred[] = {                         0,
    35,
 };
 final static short yydgoto[] = {                          3,
-    4,    7,    5,   14,   15,   41,   22,   23,   17,   42,
-   43,   44,   45,   46,   47,   48,   49,   50,   51,   52,
+    4,    7,   14,    5,   15,   41,   22,   23,   42,   43,
+   17,   44,   45,   46,   47,   48,   49,   50,   51,   52,
    53,   54,   55,  115,
 };
 final static short yysindex[] = {                      -237,
@@ -252,7 +253,7 @@ final static short yysindex[] = {                      -237,
  -231, -245, -237, -192, -237, -198, -238, -173, -199,    0,
  -166, -125,    0, -237,    0, -163,    0,    0, -171, -171,
  -162,  -94, -106, -108, -104, -229, -229,    0,    0, -243,
-    0, -101, -121,  -99, -119,    0,    0, -174, -112, -248,
+    0, -121, -101,  -99, -119,    0,    0, -174, -112, -248,
  -155, -244, -146,    0,    0,  -92, -117,    0, -127, -209,
     0, -105,  -66,  -63,  -55,  -51,  -52,  -40,  -33,    0,
  -171, -171, -235,    0,    0, -171,  -61,    0,    0,    0,
@@ -271,7 +272,7 @@ final static short yyrindex[] = {                        10,
     0,   18,   32,    0,   10,    0,    0,    0,   18,    0,
     0,    0,    0,   10,    0,   18,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0, -102,
-    0,    0,   19,    0,    0,    0,    0, -220,  259,  230,
+    0,   19,    0,    0,    0,    0,    0, -220,  259,  230,
   180,   93,    6,    0,    0,   18,    0,    0,   33,    0,
     0,    0,    0,    0,    0,   20,    0,    0,    0,    0,
     0,    0,  -69,    0,    0,    0,    0,    0,    0,    0,
@@ -286,8 +287,8 @@ final static short yyrindex[] = {                        10,
     0,
 };
 final static short yygindex[] = {                         0,
-  -13,    0,   -9,  -11,    0,   -3,    0,  -86,  -90,  241,
- -132,  -23,  272,  -67,  160,    0,  222,  223,  -12,  149,
+  -13,    0,  -11,   -9,    0,   -3,    0,  -86, -132,  242,
+  -90,  -23,  272,  -67,  160,    0,  222,  223,  -12,  149,
    62,   16,   55,    0,
 };
 final static int YYTABLESIZE=546;
@@ -311,7 +312,7 @@ yytable = new short[]{                         16,
    34,   98,   34,   66,   99,   34,   34,   21,   34,   27,
    60,    9,   93,   29,   94,   95,   16,   30,   31,   32,
    33,   34,  126,  127,   70,   35,   71,   70,   70,   70,
-   72,   80,   78,   70,   70,   81,   36,   84,   37,   12,
+   72,   80,   79,   70,   70,   81,   36,   84,   37,   12,
    29,   38,   39,   70,   40,   97,   70,   70,   70,   70,
    70,   70,   66,   70,   70,   70,   70,  101,   70,   70,
    70,   70,   70,   36,  102,   37,   70,   70,   38,   39,
@@ -323,7 +324,7 @@ yytable = new short[]{                         16,
    69,   69,   69,  133,   69,   69,   36,  135,   37,  144,
   138,   38,   39,  141,   73,   57,   57,   57,  139,  147,
   149,   57,   57,  151,  150,  156,  152,    5,   10,  160,
-   66,   57,   25,   79,   57,   57,   57,   57,   57,   57,
+   66,   57,   25,   78,   57,   57,   57,   57,   57,   57,
    57,   57,   57,   57,   55,   55,   55,   12,   14,   15,
    55,   55,   67,  154,  118,    0,  119,    0,    0,    0,
    55,    0,    0,   55,   55,   55,   55,   55,   55,   55,
@@ -384,7 +385,7 @@ yycheck = new short[] {                          9,
   287,  288,  289,  260,  291,  292,  288,  260,  290,  267,
   266,  293,  294,  260,  296,  260,  261,  262,  266,  262,
   260,  266,  267,  278,  274,  261,  260,  268,  261,  275,
-  261,  276,  264,   43,  279,  280,  281,  282,  283,  284,
+  261,  276,  264,   42,  279,  280,  281,  282,  283,  284,
   285,  286,  287,  288,  260,  261,  262,  266,  266,  266,
   266,  267,   31,  144,   83,   -1,   84,   -1,   -1,   -1,
   276,   -1,   -1,  279,  280,  281,  282,  283,  284,  285,
@@ -518,10 +519,12 @@ final static String yyrule[] = {
 "ListExpr : ListExpr COMMA AssingExpr",
 };
 
-//#line 127 "sintatico.y"
+//#line 185 "sintatico.y"
 
 
    private Yylex lexer;
+   
+   public SymTab symTab;
 
    private int yylex () {
     int yyl_return = -1;
@@ -535,24 +538,62 @@ final static String yyrule[] = {
     return yyl_return;
   }
 
+  public AST CriaVarEFunc(TypeOp typeop, Object typevar, String lexema, Object... filhos){
+    
+    System.err.println (typeop);
+    
+    return null;
+  }
+
+  public AST CriaOperador(TypeOp typeop, Object lexema, Object... filhos){
+    
+	switch (typeop) {
+	case Programa:
+		return new Programa(filhos[0], filhos[1]);
+	case Funcao:
+		return new DeclFuncVar();
+	case Variavel:
+	
+	case ListaParametros:
+		
+	default:
+		break;
+	}  
+	  
+    System.err.println (typeop);
+    
+    return null;
+  }
 
   public void yyerror (String error) {
     System.err.println ("Error: " + error + " in line " + lexer.getLine());
   }
 
-
   public Parser(Reader r) {
     lexer = new Yylex(r, this);
   }
 
+  public enum TypeOp{
+
+        Programa,        
+        Variavel,
+        Funcao,
+        Parametro,
+	ListaParametros,
+	Lexpr, Bloco, Tipo, ListaComando, Retorne, Leia, 
+	Novalinha, Escreva, Menos, Diferente, Igual, 
+	Ou, And, Assign, Enquanto, Se, MenorQ, MaiorQ, 
+	Menor, Mult, Div, Mais, Maior, Resto, Array, Call;
+        
+   }
 
   static boolean interactive;
 
   public static void main(String args[]) throws IOException {
     System.out.println("BYACC/Java with JFlex - Cafezinho");
 
-    if ( args.length < 1 ) {
-    	args = new String[1];
+	if ( args.length < 1 ) {
+		args = new String[1];
 		args[0] = "src/test/resources/teste.z";
 	}
 
@@ -576,18 +617,12 @@ final static String yyrule[] = {
     	System.err.println("\n Entrada Invalida");
     }
     
-//	try {
-//		syntaxbaum = (Programa) yyparser.yyparse().value; // parse
-//	} catch (Exception e) {
-//		e.printStackTrace();
-//	}
-
     if (interactive) {
       System.out.println();
-      System.out.println("Have a nice day");
+      System.out.println("====Fim====");
     }
   }
-//#line 509 "Parser.java"
+//#line 539 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################
@@ -741,6 +776,303 @@ boolean doaction;
     switch(yyn)
       {
 //########## USER-SUPPLIED ACTIONS ##########
+case 1:
+//#line 61 "sintatico.y"
+{ yyval.obj = new Programa(val_peek(1).obj,val_peek(0).obj); }
+break;
+case 2:
+//#line 64 "sintatico.y"
+{yyval.obj=CriaVarEFunc(TypeOp.Variavel, val_peek(4).sval, val_peek(3).sval, val_peek(2).obj, val_peek(0).obj);}
+break;
+case 3:
+//#line 65 "sintatico.y"
+{yyval.obj=CriaVarEFunc(TypeOp.Variavel, val_peek(7).sval, val_peek(6).sval, val_peek(2).obj, val_peek(0).obj);}
+break;
+case 4:
+//#line 66 "sintatico.y"
+{yyval.obj=CriaVarEFunc(TypeOp.Funcao, val_peek(3).sval, val_peek(2).sval, val_peek(1).obj, val_peek(0).obj);}
+break;
+case 5:
+//#line 67 "sintatico.y"
+{yyval.obj=null;}
+break;
+case 6:
+//#line 70 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.Programa, null);}
+break;
+case 7:
+//#line 73 "sintatico.y"
+{yyval.obj = CriaOperador(TypeOp.Variavel, val_peek(0).obj, val_peek(0).obj);}
+break;
+case 8:
+//#line 74 "sintatico.y"
+{yyval.obj = CriaOperador(TypeOp.Variavel, val_peek(1).sval, val_peek(0).obj);}
+break;
+case 9:
+//#line 75 "sintatico.y"
+{yyval.obj = CriaOperador(TypeOp.Variavel, val_peek(4).sval, val_peek(0).obj);}
+break;
+case 10:
+//#line 76 "sintatico.y"
+{yyval.obj=null;}
+break;
+case 11:
+//#line 79 "sintatico.y"
+{yyval.obj = CriaOperador(TypeOp.ListaParametros, null, val_peek(2).obj, val_peek(0).obj);}
+break;
+case 12:
+//#line 82 "sintatico.y"
+{yyval.obj=null;}
+break;
+case 13:
+//#line 83 "sintatico.y"
+{yyval.obj=val_peek(0).obj;}
+break;
+case 14:
+//#line 86 "sintatico.y"
+{yyval.obj=CriaVarEFunc(TypeOp.Parametro, val_peek(1).sval, val_peek(0).sval);}
+break;
+case 15:
+//#line 87 "sintatico.y"
+{yyval.obj=CriaVarEFunc(TypeOp.Parametro, val_peek(3).sval, val_peek(2).sval);}
+break;
+case 16:
+//#line 88 "sintatico.y"
+{yyval.obj=CriaVarEFunc(TypeOp.Parametro, val_peek(3).sval, val_peek(2).sval, val_peek(0).obj);}
+break;
+case 17:
+//#line 89 "sintatico.y"
+{yyval.obj=CriaVarEFunc(TypeOp.Parametro, val_peek(5).sval, val_peek(4).sval, val_peek(0).obj); }
+break;
+case 18:
+//#line 92 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.Bloco, null, null, val_peek(2).obj, val_peek(1).obj);}
+break;
+case 19:
+//#line 93 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.Bloco, null, null, val_peek(1).obj); }
+break;
+case 20:
+//#line 96 "sintatico.y"
+{yyval.obj=null;}
+break;
+case 21:
+//#line 97 "sintatico.y"
+{yyval.obj=CriaVarEFunc(TypeOp.Variavel, val_peek(4).sval, val_peek(3).sval, val_peek(2).obj, val_peek(0).obj);}
+break;
+case 22:
+//#line 98 "sintatico.y"
+{yyval.obj=CriaVarEFunc(TypeOp.Variavel, val_peek(7).sval, val_peek(6).sval, val_peek(4).ival, val_peek(2).obj);}
+break;
+case 23:
+//#line 101 "sintatico.y"
+{CriaVarEFunc(TypeOp.Tipo, null, null, "Tint");}
+break;
+case 24:
+//#line 102 "sintatico.y"
+{CriaVarEFunc(TypeOp.Tipo, null, null, "Tcar");}
+break;
+case 25:
+//#line 105 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.ListaComando, val_peek(0).obj, null, val_peek(0).obj);}
+break;
+case 26:
+//#line 106 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.ListaComando, null, val_peek(1).obj, val_peek(0).obj);}
+break;
+case 27:
+//#line 109 "sintatico.y"
+{yyval.obj=new Integer(SEMICOLON);}
+break;
+case 28:
+//#line 110 "sintatico.y"
+{yyval.obj=val_peek(1).obj;}
+break;
+case 29:
+//#line 111 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.Retorne, null, null, val_peek(1).obj);}
+break;
+case 30:
+//#line 112 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.Leia, null, null, val_peek(1).obj);}
+break;
+case 31:
+//#line 113 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.Escreva, null, null, val_peek(1).obj);}
+break;
+case 32:
+//#line 114 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.Escreva, null, val_peek(1).sval);}
+break;
+case 33:
+//#line 115 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.Novalinha, null, null);}
+break;
+case 34:
+//#line 116 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.Se, null, null, val_peek(3).obj, val_peek(0).obj);}
+break;
+case 35:
+//#line 117 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.Se, null, null, val_peek(5).obj, val_peek(2).obj, val_peek(0).obj);}
+break;
+case 36:
+//#line 118 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.Enquanto, null, null, val_peek(3).obj, val_peek(0).obj);}
+break;
+case 37:
+//#line 119 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.Bloco, null, null, val_peek(0).obj);}
+break;
+case 38:
+//#line 122 "sintatico.y"
+{yyval.obj=val_peek(0).obj;}
+break;
+case 39:
+//#line 125 "sintatico.y"
+{yyval.obj=val_peek(0).obj;}
+break;
+case 40:
+//#line 126 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.Assign, null, null, val_peek(2).obj, val_peek(0).obj);}
+break;
+case 41:
+//#line 129 "sintatico.y"
+{ yyval.obj = val_peek(0).obj;}
+break;
+case 42:
+//#line 130 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.Se, null, null, val_peek(4).obj, val_peek(2).obj, val_peek(0).obj); }
+break;
+case 43:
+//#line 133 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.Ou, null, null, val_peek(2).obj, val_peek(0).obj); }
+break;
+case 45:
+//#line 136 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.And, null, null, val_peek(2).obj, val_peek(0).obj);}
+break;
+case 46:
+//#line 137 "sintatico.y"
+{ yyval.obj = val_peek(0).obj;}
+break;
+case 47:
+//#line 140 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.Igual, null, null, val_peek(2).obj, val_peek(0).obj);}
+break;
+case 48:
+//#line 141 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.Diferente, null, null, val_peek(2).obj, val_peek(0).obj);}
+break;
+case 49:
+//#line 142 "sintatico.y"
+{yyval.obj=val_peek(0).obj;}
+break;
+case 50:
+//#line 145 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.Menor, null, null, val_peek(2).obj, val_peek(0).obj);}
+break;
+case 51:
+//#line 146 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.Maior, null, null, val_peek(2).obj, val_peek(0).obj);}
+break;
+case 52:
+//#line 147 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.MaiorQ, null, null, val_peek(2).obj, val_peek(0).obj);}
+break;
+case 53:
+//#line 148 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.MenorQ, null, null, val_peek(2).obj, val_peek(0).obj);}
+break;
+case 54:
+//#line 149 "sintatico.y"
+{yyval.obj=val_peek(0).obj;}
+break;
+case 55:
+//#line 152 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.Mais, null, null, val_peek(2).obj, val_peek(0).obj);}
+break;
+case 56:
+//#line 153 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.Menos, null, null, val_peek(2).obj, val_peek(0).obj);}
+break;
+case 57:
+//#line 154 "sintatico.y"
+{yyval.obj=val_peek(0).obj;}
+break;
+case 58:
+//#line 157 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.Mult, null, null, val_peek(2).obj, val_peek(0).obj);}
+break;
+case 59:
+//#line 158 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.Div, null, null, val_peek(2).obj, val_peek(0).obj);}
+break;
+case 60:
+//#line 159 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.Resto, null, null, val_peek(2).obj, val_peek(0).obj);}
+break;
+case 61:
+//#line 160 "sintatico.y"
+{yyval.obj=val_peek(0).obj;}
+break;
+case 62:
+//#line 163 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.Menos, null, null, val_peek(0).obj);}
+break;
+case 63:
+//#line 164 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.Diferente, null, null, val_peek(0).obj);}
+break;
+case 64:
+//#line 165 "sintatico.y"
+{yyval.obj=val_peek(0).obj;}
+break;
+case 65:
+//#line 168 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.Array, null, val_peek(3).sval, val_peek(1).obj);}
+break;
+case 66:
+//#line 169 "sintatico.y"
+{yyval.obj=val_peek(0).sval;}
+break;
+case 67:
+//#line 172 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.Call, null, val_peek(3).sval, val_peek(1).obj);}
+break;
+case 68:
+//#line 173 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.Call, null, val_peek(2).sval);}
+break;
+case 69:
+//#line 174 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.Array, null, val_peek(3).sval, val_peek(1).obj);}
+break;
+case 70:
+//#line 175 "sintatico.y"
+{yyval.obj=val_peek(0).sval;}
+break;
+case 71:
+//#line 176 "sintatico.y"
+{yyval.obj=val_peek(0).obj;}
+break;
+case 72:
+//#line 177 "sintatico.y"
+{yyval.obj=val_peek(0).ival;}
+break;
+case 73:
+//#line 178 "sintatico.y"
+{yyval.obj=val_peek(1).obj;}
+break;
+case 74:
+//#line 181 "sintatico.y"
+{yyval.obj=val_peek(0).obj;}
+break;
+case 75:
+//#line 182 "sintatico.y"
+{yyval.obj=CriaOperador(TypeOp.Lexpr, null, null, val_peek(0).obj);}
+break;
+//#line 984 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####

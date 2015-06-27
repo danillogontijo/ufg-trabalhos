@@ -6,6 +6,6 @@ package br.ufg.emc.compiladores.interpreter.ast;
  * so the interface doesn't add any functionality. It only provides   
  * a common super type for all elements in the AST.                   
  */
-interface AST {
+public interface AST {
   public String toString();   // already inherited from Object
 }

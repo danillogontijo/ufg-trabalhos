@@ -1,4 +1,5 @@
 /*PROGRAMA TESTE*/
+int teste;
 int par[5], impar[6],i,p,x;
 programa{
 x=1;
